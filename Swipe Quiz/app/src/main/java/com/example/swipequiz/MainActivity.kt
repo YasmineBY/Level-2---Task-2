@@ -138,7 +138,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 questionAdapter.notifyDataSetChanged()
             }
-            
+
             // Callback triggered when a user swiped an item.
              fun onClick(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 val position = viewHolder.adapterPosition
