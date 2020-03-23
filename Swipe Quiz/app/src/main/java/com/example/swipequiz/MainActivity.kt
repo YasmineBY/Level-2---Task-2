@@ -20,15 +20,12 @@ class MainActivity : AppCompatActivity() {
     private val questions = ArrayList<Question>()
     private val questionAdapter = QuestionAdapter(questions)
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
-        questions.add(Question("Carrots are orange"))
-        questions.add(Question("A pyramid is shaped like a triangle"))
-        questions.add(Question("Dogs can also be pink colored"))
-        questions.add(Question("You have to swipe left if a question is true"))
 
 
 
@@ -53,6 +50,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    private fun initQuestions() {
+
+        val LIST_OF_QUESTIONS = arrayOf(
+            Question("Carrots are orange"),
+            Question("Humans cannot breathe underwater"),
+            Question("Dogs can also be pink colored"),
+            Question("You have to swipe left if a question is true")
+        )
+        for (i in LIST_OF_QUESTIONS) {
+            questions.add(i)
+        }
+    }
     private fun initViews() {
 
         rvView.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
@@ -63,18 +73,15 @@ class MainActivity : AppCompatActivity() {
                 DividerItemDecoration.VERTICAL
             )
         )
-
         createItemTouchHelper().attachToRecyclerView(rvView)
-
+        initQuestions()
+        questionAdapter.notifyDataSetChanged()
     }
 
     fun onswipeRight(swipedQuestion: String, position: Int) {
-//        val swipeRight = ArrayList<Question>()
-//        swipeRight.add(Question("Carrots are orange"))
-//        swipeRight.add(Question("A pyramid is shaped like a triangle"))
         val swipeRight = ArrayList<Question>()
         swipeRight.add(Question("Carrots are orange"))
-        swipeRight.add(Question("A pyramid is shaped like a triangle"))
+        swipeRight.add(Question("Humans cannot breathe underwater"))
 
         for (question in swipeRight) {
             if (swipedQuestion == question.questionText) {
@@ -131,12 +138,9 @@ class MainActivity : AppCompatActivity() {
                 }
                 questionAdapter.notifyDataSetChanged()
             }
+            
             // Callback triggered when a user swiped an item.
              fun onClick(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//                viewHolder.setOnClickListener{
-//
-//                }
-
                 val position = viewHolder.adapterPosition
                 var clickedQuestion = questions.elementAt(position).questionText
                 Snackbar.make(toolbar, clickedQuestion, Snackbar.LENGTH_SHORT).show()
